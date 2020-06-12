@@ -24,7 +24,7 @@ def goodbye():
     return 'Goodbye'
 
 @app.route('/greet/<name>')
-def greet(name, foo, bar):
+def greet(name):
     return 'Nice to meet you ' + name
 
 @app.route('/add/<int:x>/<int:y>', methods = ['GET'])
