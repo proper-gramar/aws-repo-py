@@ -2,6 +2,12 @@ import psycopg2
 import json
 from secrets import get_secret_image_gallery
 
+#db_host = "image-gallery.cs4qwvqazvut.us-west-1.rds.amazonaws.com"
+db_name = "image_gallery"
+#db_user = "image_gallery"
+
+#password_file = "/home/ec2-user/.image_gallery_config"
+
 connection = None
 
 def get_secret():

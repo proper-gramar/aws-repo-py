@@ -6,11 +6,10 @@ import boto3
 import base64
 from botocore.exceptions import ClientError
 
-
 def get_secret_image_gallery():
-
+    #secret = ""
     secret_name = "sec-ig-image_gallery"
-    region_name = "us-east-2"
+    region_name = "us-west-1"
 
     # Create a Secrets Manager client
     session = boto3.session.Session()
@@ -28,6 +27,7 @@ def get_secret_image_gallery():
             SecretId=secret_name
         )
     except ClientError as e:
+        print(e.response)
         if e.response['Error']['Code'] == 'DecryptionFailureException':
             # Secrets Manager can't decrypt the protected secret text using the provided KMS key.
             # Deal with the exception here, and/or rethrow at your discretion.
@@ -48,6 +48,7 @@ def get_secret_image_gallery():
             # We can't find the resource that you asked for.
             # Deal with the exception here, and/or rethrow at your discretion.
             raise e
+        print(e.response)
     else:
         # Decrypts secret using the associated KMS CMK.
         # Depending on whether the secret is a string or binary, one of these fields will be populated.
@@ -55,9 +56,10 @@ def get_secret_image_gallery():
             secret = get_secret_value_response['SecretString']
         else:
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
-            
+
     if secret is None:
+        
         return decoded_binary_secret
     else:
+        
         return secret
-    
