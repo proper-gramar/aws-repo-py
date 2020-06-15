@@ -12,7 +12,7 @@ app = Flask(__name__)
 ###db.py contents running here###
 #################################
 
-### establishes connection to postgreSQL database
+
 db_host = "image-gallery.cs4qwvqazvut.us-west-1.rds.amazonaws.com"
 db_name = "image_gallery"
 db_user = "image_gallery"
@@ -65,7 +65,6 @@ def hello_world():
    </head>
    <body>
      <h1>Hello, Grant!</h1>
-        <a href="/admin">Admin Panel</a>
    </body>
 </html>
 """
@@ -96,29 +95,20 @@ def calculator(personsName):
 ### M3 Functions ###
 ####################
 
-###admin landing page###
 @app.route('/admin')
 def admin():
     return render_template('adminLanding.html')
 
-
-### needs to parse data  from url ###
 @app.route('/admin/addUsers') #,methods = ['POST'])
 def addUser():
-    #username = input('Username> ')
-    #full_name = input('full name> ')
-    #password = input('password> ')
-    #insert = execute('INSERT username, full_name, password INTO users')
-    #get_template(test_template)
     return render_template('addUserTemplate.html')
 
-###submit user function###
 def submitUser():
     connect()
     cursor = connection.cursor()
     cursor.execute('insert username, full_name, password into user')
 
-###@app.route('/admin/listUsers') #, methods['GET'])###
+#@app.route('/admin/listUsers') #, methods['GET'])
 def listUsers():
     res = execute('select username, full_name from users')
     for row in res:
@@ -126,24 +116,20 @@ def listUsers():
     print('')
 
 
-###kinda busted... lists users as a string object. parse to string??###
 @app.route('/admin/listUsers', methods=['GET'])
 def userList():
     connect()
     cursor = connection.cursor()
-    cursor.execute('select username, full_name from users')
-    rows = cursor.fetchall()
-    return(str(rows))
+    cursor.execute('SELECT username, full_name FROM users')
+    resultList = cursor.fetchmany()
+    for user in users
+    return temp
+#    return(str(resultList))
 
-
-
-###delete method ###
 @app.route('/admin/delete') #, methods['DELETE'])
 def delete():
     return('returns delete link next to user')
 
-
-### edit user ### needs to query sql and patch entry
 @app.route('/admin/modifyUsers') #, methods['PATCH'])
 def modifyUsers():
     return ('modified user panel')
